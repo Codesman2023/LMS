@@ -84,7 +84,7 @@ export default function BlogListClient({ blogs }) {
                 </p>
 
                 <div className="mb-4 text-xs text-gray-500 dark:text-gray-400">
-                  <span>By {blog.author}</span> · <span>{formatBlogDate(blog.date)}</span>
+                  <span>By {blog.author}</span> ï¿½ <span>{formatBlogDate(blog.date)}</span>
                 </div>
 
                 <Link

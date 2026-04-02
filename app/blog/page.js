@@ -1,7 +1,10 @@
+import { Suspense } from "react";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import BlogListClient from "@/components/public/BlogListClient";
+
+export const dynamic = "force-dynamic";
 
 function getBlogs() {
   const contentDir = path.join(process.cwd(), "content");
@@ -28,5 +31,9 @@ function getBlogs() {
 
 export default function Blog() {
   const blogs = getBlogs();
-  return <BlogListClient blogs={blogs} />;
+  return (
+    <Suspense fallback={<div>Loading blogs…</div>}>
+      <BlogListClient blogs={blogs} />
+    </Suspense>
+  );
 }
