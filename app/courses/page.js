@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function CoursesPage() {
+export const dynamic = 'force-dynamic';
+
+function CoursesPageContent() {
   const [courses, setCourses] = useState([]);
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
@@ -76,5 +78,13 @@ export default function CoursesPage() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function CoursesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading courses...</div>}>
+      <CoursesPageContent />
+    </Suspense>
   );
 }
