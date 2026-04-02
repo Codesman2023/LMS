@@ -2,7 +2,7 @@
 title: how solve ModuleNotFoundError in Python
 description: "Solving the 'ModuleNotFoundError: no module named' error in Python can be a common issue for developers. This guide explains the cause of the error and provides step-by-step solutions to resolve it, making your Python coding experience smoother."
 slug: ModuleNotFoundError_Python_Solution
-date: 31/04/23
+date: "2023-04-30"
 author: MY-LMS
 image: /blog.webp
 ---

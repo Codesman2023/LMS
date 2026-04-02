@@ -4,6 +4,22 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
+function formatBlogDate(value) {
+  if (!value) return "Date unavailable";
+
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return String(value);
+  }
+
+  return parsed.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export default function BlogListClient({ blogs }) {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
@@ -13,6 +29,8 @@ export default function BlogListClient({ blogs }) {
 
     const normalized = blogs.map((blog) => ({
       ...blog,
+      author: blog.author || "Unknown author",
+      image: blog.image || "/blog.webp",
       published: typeof blog.published === "boolean" ? blog.published : true,
     }));
 
@@ -26,7 +44,9 @@ export default function BlogListClient({ blogs }) {
     result = [...result].sort((a, b) => {
       const aDate = new Date(a.date || 0).getTime();
       const bDate = new Date(b.date || 0).getTime();
-      return bDate - aDate;
+      const safeADate = Number.isNaN(aDate) ? 0 : aDate;
+      const safeBDate = Number.isNaN(bDate) ? 0 : bDate;
+      return safeBDate - safeADate;
     });
 
     return result;
@@ -50,7 +70,7 @@ export default function BlogListClient({ blogs }) {
             >
               <img
                 src={blog.image}
-                alt={blog.title}
+                alt={blog.title || "Blog cover image"}
                 className="h-56 w-full object-cover"
               />
 
@@ -64,21 +84,14 @@ export default function BlogListClient({ blogs }) {
                 </p>
 
                 <div className="mb-4 text-xs text-gray-500 dark:text-gray-400">
-                  <span>By {blog.author}</span> ·{" "}
-                  <span>
-                    {new Date(blog.date).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    })}
-                  </span>
+                  <span>By {blog.author}</span> � <span>{formatBlogDate(blog.date)}</span>
                 </div>
 
                 <Link
                   href={`/blogpost/${blog.slug}`}
                   className="mt-auto inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
                 >
-                  Read More →
+                  Read More ->
                 </Link>
               </div>
             </div>

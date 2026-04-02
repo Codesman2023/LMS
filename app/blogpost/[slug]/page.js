@@ -1,4 +1,5 @@
 import fs from "fs"
+import path from "path"
 import matter from "gray-matter"
 import { notFound }from "next/navigation"
 import rehypeDocument from 'rehype-document'
@@ -15,21 +16,13 @@ import rehypeSlug from 'rehype-slug'
 
 export default async function Page({ params }) {
 
-    // const blog = {
-    //     title: "Typescript tutorial in hindi",
-    //     author: "John Doe",
-    //     description: "This is a sample blog post description.",
-    //     date: "2024-09-02",
-    //     content: "<p>This is the content of the blog post. It can include <strong>HTML</strong> tags and other elements.</p>"
-    // };
-
     const { slug } = await params;
-    const filepath = `content/${slug}.md`
+    const filepath = path.join(process.cwd(), "content", `${slug}.md`)
     
-    if(!fs.existsSync(filepath)){ 
-        notFound() 
-        return 
-    } 
+    if(!fs.existsSync(filepath)){
+        notFound()
+        return
+    }
 
     const fileContent = fs.readFileSync(filepath, "utf-8")
     const {content, data} = matter(fileContent)
@@ -37,7 +30,7 @@ export default async function Page({ params }) {
     const processor = unified()
   .use(remarkParse)
   .use(remarkRehype)
-  .use(rehypeDocument, {title: '👋🌍'})
+  .use(rehypeDocument, {title: 'Blog Post'})
   .use(rehypeFormat)
   .use(rehypeStringify)
   .use(rehypeSlug)

@@ -2,7 +2,7 @@
 title: SQL for Beginners
 description: A complete and detailed SQL tutorial with theory, examples, and queries.
 slug: Complete_SQL_Tutorial
-date: 31/12/23
+date: "2023-12-31"
 author: MY-LMS
 image: /blog.webp
 ---
