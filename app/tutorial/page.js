@@ -1,4 +1,5 @@
 import fs from "fs";
+import { Suspense } from "react";
 import matter from "gray-matter";
 import TutorialListClient from "@/components/public/TutorialListClient";
 
@@ -14,7 +15,11 @@ const tutorials = dirTutorial.map((file) => {
 });
 
 const Page = () => {
-  return <TutorialListClient tutorials={tutorials} />;
+  return (
+    <Suspense fallback={<div>Loading tutorials...</div>}>
+      <TutorialListClient tutorials={tutorials} />
+    </Suspense>
+  );
 };
 
 export default Page;
