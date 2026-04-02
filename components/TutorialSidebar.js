@@ -11,8 +11,12 @@ const TutorialSidebar = ({ htmlContent }) => {
   const params = useParams();
 
   const getChapters = useCallback(() => {
+    if (typeof window === "undefined" || !htmlContent) {
+      return [];
+    }
+
     const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent || '';
+    tempDiv.innerHTML = htmlContent;
 
     const h1Elements = tempDiv.querySelectorAll('h1');
     const chapters = [];
