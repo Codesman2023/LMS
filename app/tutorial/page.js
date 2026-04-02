@@ -1,7 +1,9 @@
-import fs from "fs";
 import { Suspense } from "react";
+import fs from "fs";
 import matter from "gray-matter";
 import TutorialListClient from "@/components/public/TutorialListClient";
+
+export const dynamic = "force-dynamic";
 
 const dirTutorial = fs.readdirSync("tutorial", "utf-8");
 
