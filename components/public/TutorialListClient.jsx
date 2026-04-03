@@ -46,38 +46,46 @@ export default function TutorialListClient({ tutorials }) {
   }, [tutorials, query]);
 
   return (
-    <div className="min-h-screen px-6 py-12">
-      <div className="mb-10 space-y-4 text-center">
-        <h1 className="text-4xl font-bold">Tutorials</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+    <div className="min-h-screen px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
+      <div className="mx-auto mb-8 max-w-3xl space-y-3 text-center sm:mb-10 sm:space-y-4">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+          Tutorials
+        </h1>
+        <p className="text-sm leading-6 text-gray-500 dark:text-gray-400 sm:text-base">
           Browse curated tutorials and learn at your own pace.
         </p>
       </div>
 
       {filteredTutorials.length ? (
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:gap-8">
           {filteredTutorials.map((item, index) => (
             <div
               key={`${item.slug}-${index}`}
-              className="group flex h-full flex-col items-center rounded-xl border bg-white p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-white/5"
+              className="group flex h-full flex-col items-center rounded-2xl border bg-white p-5 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-white/5 sm:p-6"
             >
-              <div className="mb-5 text-6xl">{iconMap[item.icon]}</div>
+              <div className="mb-4 text-5xl sm:mb-5 sm:text-6xl">
+                {iconMap[item.icon]}
+              </div>
 
-              <h2 className="mb-5 text-xl font-semibold">{item.title}</h2>
+              <h2 className="mb-3 text-lg font-semibold sm:mb-5 sm:text-xl">
+                {item.title}
+              </h2>
 
-              <p className="mb-6 line-clamp-3 text-sm">{item.description}</p>
+              <p className="mb-5 line-clamp-3 text-sm leading-6 sm:mb-6">
+                {item.description}
+              </p>
 
               <Link
                 href={`/tutorialpost/${item.slug}`}
-                className="mt-auto inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
+                className="mt-auto inline-flex min-h-10 w-full items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black sm:w-auto"
               >
-                Start Learning! →
+                Start Learning!
               </Link>
             </div>
           ))}
         </div>
       ) : (
-        <div className="mx-auto max-w-4xl rounded-xl border border-dashed border-slate-300 bg-white/60 p-10 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-white/5 dark:text-slate-400">
+        <div className="mx-auto max-w-4xl rounded-xl border border-dashed border-slate-300 bg-white/60 p-6 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-white/5 dark:text-slate-400 sm:p-10">
           No tutorials match your search.
         </div>
       )}

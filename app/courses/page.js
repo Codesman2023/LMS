@@ -8,13 +8,30 @@ export const dynamic = 'force-dynamic';
 
 function CoursesPageContent() {
   const [courses, setCourses] = useState([]);
+  const [error, setError] = useState("");
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
 
   useEffect(() => {
     fetch("/api/courses")
-      .then((res) => res.json())
-      .then(setCourses);
+      .then(async (res) => {
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to load courses");
+        }
+
+        if (!Array.isArray(data)) {
+          throw new Error("Invalid courses response");
+        }
+
+        setCourses(data);
+      })
+      .catch((err) => {
+        console.error("Failed to load courses:", err);
+        setError(err.message || "Failed to load courses");
+        setCourses([]);
+      });
   }, []);
 
   const filteredCourses = courses.filter((course) => {
@@ -30,6 +47,14 @@ function CoursesPageContent() {
       <h1 className="text-3xl font-bold mb-8 text-center">
         Premium Courses
       </h1>
+
+      {error ? (
+        <p className="mb-8 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-center text-red-700">
+          Courses are temporarily unavailable. Check `MONGODB_URI` in Vercel,
+          MongoDB Atlas network access, and make sure your course records are
+          marked as published.
+        </p>
+      ) : null}
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {filteredCourses.map((course) => (

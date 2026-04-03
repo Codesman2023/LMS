@@ -85,15 +85,15 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="p-6 bg-background/50 sticky top-0 backdrop-blur border-b z-10">
+    <nav className="sticky top-0 z-10 border-b bg-background/50 px-3 py-4 backdrop-blur sm:px-5 sm:py-5 lg:px-6">
       <LoadingBar
         color="#933ce6"
         progress={progress}
         onLoaderFinished={() => setProgress(0)}
       />
-      <div className="container mx-auto flex flex-wrap items-center justify-between gap-4">
-        <Link href={"/"}>
-          <div className="text-lg font-bold">MY-LMS</div>
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3">
+        <Link href={"/"} className="shrink-0">
+          <div className="text-base font-bold tracking-tight sm:text-lg">MY-LMS</div>
         </Link>
         <div className="hidden min-[1250px]:flex flex-1 flex-wrap items-center gap-4">
           <div className="flex flex-wrap items-center gap-4">
@@ -192,7 +192,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="flex flex-1 items-center justify-end gap-2 min-[1250px]:hidden">
+        <div className="ml-auto flex shrink-0 items-center justify-end gap-1.5 sm:gap-2 min-[1250px]:hidden">
           <form
             onSubmit={handleSearchSubmit}
             className="hidden min-[800px]:flex min-w-0 flex-1 items-center justify-end gap-2"
@@ -223,7 +223,7 @@ const Navbar = () => {
               <Button
                 variant="outline"
                 size="icon"
-                className="min-[800px]:hidden"
+                className="h-9 w-9 min-[800px]:hidden"
                 aria-label="Open search"
               >
                 <Search className="h-4 w-4" />
@@ -311,7 +311,12 @@ const Navbar = () => {
 
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" aria-label="Open navigation menu">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-9 w-9"
+                aria-label="Open navigation menu"
+              >
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
