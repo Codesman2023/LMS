@@ -6,6 +6,21 @@ export default withAuth(
     const token = req.nextauth.token;
     const pathname = req.nextUrl.pathname;
 
+    // Role-based entry redirects
+    if (pathname === "/") {
+      if (token?.role === "admin") {
+        return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+      }
+      return NextResponse.next();
+    }
+
+    // Prevent logged-in users from seeing login page again
+    if (pathname === "/login" && token) {
+      const destination =
+        token.role === "admin" ? "/admin/dashboard" : "/user-dashboard";
+      return NextResponse.redirect(new URL(destination, req.url));
+    }
+
     // Protect admin routes
     if (pathname.startsWith("/admin")) {
       if (!token || token.role !== "admin") {

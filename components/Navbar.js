@@ -34,7 +34,7 @@ const Navbar = () => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchScope, setSearchScope] = useState("blog");
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     setProgress(20);
@@ -188,7 +188,7 @@ const Navbar = () => {
               </DropdownMenu>
             )}
 
-            <ModeToggle />
+            {session && <ModeToggle />}
           </div>
         </div>
 
@@ -307,7 +307,7 @@ const Navbar = () => {
             </DropdownMenu>
           )}
 
-          <ModeToggle />
+          {session && <ModeToggle />}
 
           <Sheet>
             <SheetTrigger asChild>
@@ -331,9 +331,13 @@ const Navbar = () => {
                     <Link href="/courses">Courses</Link>
                     <Link href="/blog">Blog</Link>
                     <Link href="/contact">Contact</Link>
-                    <DropdownMenuSeparator />
-                    <Link href="/user-dashboard">Dashboard</Link>
-                    <Link href="/user-profile">Profile</Link>
+                    {session && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <Link href="/user-dashboard">Dashboard</Link>
+                        <Link href="/user-profile">Profile</Link>
+                      </>
+                    )}
                     <div>
                       {!session ? (
                         <>
